@@ -7,7 +7,12 @@ CREATE TABLE `category` (
 INSERT INTO `category` (`id`, `name`) VALUES
 (1, 'Kannettavat'),
 (2, 'Pelitietokoneet'),
-(3, 'Näytöt');
+(3, 'Näytöt'),
+(4, 'Hiiret'),
+(5, 'Näppäimistöt'),
+(6, 'Kuulokkeet & Mikrofonit')
+(7, 'Kaapelit'),
+(8, 'Adapterit');
 
 CREATE TABLE `product` (
   `id` int(11) NOT NULL,

@@ -99,9 +99,6 @@ CREATE TABLE `orders` (
   FOREIGN KEY (customer_id) REFERENCES customer(id)
 );
 
-INSERT INTO `orders` (`customer_id`, `orderdate`) VALUES 
-('1', '2022-04-29 14:45:47'),
-('1', '2022-03-28 16:45:47');
 
 CREATE TABLE `orderline` (
   `order_id` int NOT NULL,
@@ -112,6 +109,10 @@ CREATE TABLE `orderline` (
   FOREIGN KEY (product_id) REFERENCES product(id),
  FOREIGN key (order_id) REFERENCES orders(order_id)
 );
+
+INSERT INTO `orders` ( `order_id`, `customer_id`, `orderdate`) VALUES 
+('4', '1', '2022-04-29 14:45:47'),
+('5', '1', '2022-03-28 16:45:47');
 
 INSERT INTO `orderline` (`order_id`, `row_id`, `product_id`, `amount`) VALUES 
 ('4', '1','1','3'), 

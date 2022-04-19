@@ -1,17 +1,17 @@
 <?php
 require_once '../inc/functions.php';
 require_once '../inc/headers.php';
-session_start();
 
+session_start();
 $errors = array();
 
-$db = openDB();
+try{
+	$db = openDB();
 
-$input = json_decode(file_get_contents('php://input'));
-
-$email = filter_var($input->email,FILTER_SANITIZE_SPECIAL_CHARS);
-$password = filter_var($input->password,FILTER_SANITIZE_SPECIAL_CHARS);
-
+	$input = json_decode(file_get_contents('php://input'));
+	$email = filter_var($input->email,FILTER_SANITIZE_SPECIAL_CHARS);
+	$password = filter_var($input->password,FILTER_SANITIZE_SPECIAL_CHARS);
+	
   if (empty($email)) {
   	array_push($errors, "Sähköposti vaaditaan");
   }
@@ -36,11 +36,14 @@ $password = filter_var($input->password,FILTER_SANITIZE_SPECIAL_CHARS);
 			else { //Wrong password
 				array_push($errors, "Väärä sähköposti tai salasana");
 			}}
-
 			else { //Wrong email
 				array_push($errors, "Väärä sähköposti tai salasana");
-
 			}
   }
-
 	echo json_encode($errors);
+}
+	catch (PDOException $pdoex) {
+    returnError($pdoex);
+}
+
+	

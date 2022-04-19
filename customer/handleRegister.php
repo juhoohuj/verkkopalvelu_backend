@@ -4,8 +4,8 @@ require_once '../inc/headers.php';
 session_start();
 
 $errors = array(); 
-
-$db = openDB();
+try{
+  $db = openDB();
 
 // REGISTER USER
   $input = json_decode(file_get_contents('php://input'));
@@ -18,7 +18,6 @@ $db = openDB();
   $address = filter_var($input->address,FILTER_SANITIZE_SPECIAL_CHARS);
   $zipcode = filter_var($input->zipcode,FILTER_SANITIZE_SPECIAL_CHARS);
   $city = filter_var($input->city,FILTER_SANITIZE_SPECIAL_CHARS);
-
 
   //Form validation
   if (empty($firstname)) { 
@@ -45,7 +44,6 @@ $db = openDB();
   if (empty($city)) { 
     array_push($errors, "Postitoimipaikka vaaditaan"); 
   }
-
   // Check the database to make sure 
   // a user does not already exist with the email
   $user_check_query = "SELECT * FROM customer where email= ? LIMIT 1";
@@ -55,9 +53,7 @@ $db = openDB();
 
   if ($user) { // if user exists
       array_push($errors, "Sähköposti on jo rekisteröity");
-    
   }
-
   // Register user if there are no errors in the form
   if (count($errors) == 0) {
   	$hashed_password = password_hash($password_1, PASSWORD_DEFAULT);//encrypt the password before saving in the database
@@ -72,3 +68,7 @@ $db = openDB();
   } else {
       echo json_encode($errors);
   }
+}  catch (PDOException $pdoex) {
+    returnError($pdoex);
+  
+}

@@ -5,7 +5,7 @@ require_once 'inc/headers.php';
 try{
     $db = openDB();
     
-    $sql = "select * from orders";
+    $sql = "select firstname, lastname, customer_id, order_id, orderdate from orders, customer where orders.customer_id = customer.id;";
     $query = $db->query($sql);
     $results = $query->fetchAll(PDO::FETCH_ASSOC);
     header('HTTP/1.1 200 OK');

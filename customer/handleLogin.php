@@ -1,8 +1,8 @@
 <?php
+session_start();
 require_once '../inc/functions.php';
 require_once '../inc/headers.php';
 
-session_start();
 $errors = array();
 
 try{
@@ -29,6 +29,7 @@ try{
 
 		if($user !== false) { //Check if user exists in database
   		if (password_verify($password, $user['password'])) { //Check if password matches returns true or false
+				$_SESSION['userid'] = $user['id']; 
   	  	$_SESSION['firstname'] = $user['firstname'];
 				$_SESSION['lastname'] = $user['lastname'];
 				array_push($errors, "Tervetuloa " .$_SESSION['firstname']. " ".$_SESSION['lastname']);
